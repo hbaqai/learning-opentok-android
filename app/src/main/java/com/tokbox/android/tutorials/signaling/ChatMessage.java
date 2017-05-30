@@ -1,4 +1,4 @@
-package com.tokbox.android.demo.learningopentok;
+package com.tokbox.android.tutorials.signaling;
 
 public class ChatMessage {
 

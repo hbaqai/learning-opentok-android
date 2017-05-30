@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
-apply from: 'config.gradle'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.tokbox.android.demo.learningopentok"
-        minSdkVersion 19
-        targetSdkVersion 21
+        applicationId "com.tokbox.android.tutorials.signaling"
+        minSdkVersion 16
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -20,17 +19,14 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
-android.buildTypes.each { type ->
-    type.buildConfigField 'String', 'CHAT_SERVER_URL', "\"$chatServerUrl\""
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.mcxiaoke.volley:library:1.0.15@aar'
+    compile 'com.opentok.android:opentok-android-sdk:2.11.0'
+    compile 'pub.devrel:easypermissions:0.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.volley:volley:1.0.0'
 }

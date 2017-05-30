@@ -1,4 +1,4 @@
-package com.tokbox.android.demo.learningopentok;
+package com.tokbox.android.tutorials.signaling;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,22 +15,22 @@ import org.json.JSONObject;
 
 public class WebServiceCoordinator {
 
-    private static final String CHAT_SERVER_URL = BuildConfig.CHAT_SERVER_URL;
-    private static final String SESSION_INFO_ENDPOINT = CHAT_SERVER_URL + "/session";
-
     private static final String LOG_TAG = WebServiceCoordinator.class.getSimpleName();
 
     private final Context context;
     private Listener delegate;
 
     public WebServiceCoordinator(Context context, Listener delegate) {
+
         this.context = context;
         this.delegate = delegate;
     }
 
-    public void fetchSessionConnectionData() {
+    public void fetchSessionConnectionData(String sessionInfoUrlEndpoint) {
+
         RequestQueue reqQueue = Volley.newRequestQueue(context);
-        reqQueue.add(new JsonObjectRequest(Request.Method.GET, SESSION_INFO_ENDPOINT, new Response.Listener<JSONObject>() {
+        reqQueue.add(new JsonObjectRequest(Request.Method.GET, sessionInfoUrlEndpoint,
+                null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -38,9 +38,7 @@ public class WebServiceCoordinator {
                     String sessionId = response.getString("sessionId");
                     String token = response.getString("token");
 
-                    Log.i(LOG_TAG, apiKey);
-                    Log.i(LOG_TAG, sessionId);
-                    Log.i(LOG_TAG, token);
+                    Log.i(LOG_TAG, "WebServiceCoordinator returned session information");
 
                     delegate.onSessionConnectionDataReady(apiKey, sessionId, token);
 
@@ -57,6 +55,7 @@ public class WebServiceCoordinator {
     }
 
     public static interface Listener {
+
         void onSessionConnectionDataReady(String apiKey, String sessionId, String token);
         void onWebServiceCoordinatorError(Exception error);
     }
